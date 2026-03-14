@@ -1,7 +1,4 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import API from "../services/api";
-
+import { useEffect, useState, useCallback } from "react";
 export default function VersionHistoryPage() {
 
   const { documentId } = useParams();
@@ -13,21 +10,18 @@ export default function VersionHistoryPage() {
   loadVersions();
 }, [documentId]);
 
-  const loadVersions = async () => {
+  const loadVersions = useCallback(async () => {
 
-    try {
+  try {
+    const res = await API.get(`/Documents/versions/${documentId}`);
+    setVersions(res.data);
+  } catch (err) {
+    console.error(err);
+  }
 
-      const res = await API.get(`/Documents/versions/${documentId}`);
+}, [documentId]);
 
-      setVersions(res.data);
 
-    } catch (err) {
-
-      console.error(err);
-
-    }
-
-  };
 
   const uploadVersion = async () => {
 
