@@ -10,8 +10,8 @@ export default function VersionHistoryPage() {
   const [file, setFile] = useState(null);
 
   useEffect(() => {
-    loadVersions();
-  }, []);
+  loadVersions();
+}, [documentId]);
 
   const loadVersions = async () => {
 
